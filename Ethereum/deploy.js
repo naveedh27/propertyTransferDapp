@@ -29,7 +29,7 @@ accounts = await web3.eth.getAccounts();
 
   console.log('Contract Address '+inbox.options.address);
   inbox.setProvider(provider);
-  
+
 }
 
 

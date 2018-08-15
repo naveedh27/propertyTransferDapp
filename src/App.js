@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import 'semantic-ui-css/semantic.min.css'
 import Layout from './Layout/Layout'
-import Body from './Component/Body'
+import RouteHandler from './Component/RouteHandler'
 
 
 class App extends Component {
   render() {
     return (
       <Layout>
-        <Body />
+        <RouteHandler />
       </Layout>
     );
   }

@@ -1,19 +1,18 @@
-import React,{Component} from 'react';
+import React, { Component } from 'react';
+
+import NavigationMenu from './NavigationMenu';
 
 export default class Home extends Component {
 
-    state = {
-        value: 0,
-      };
-    
-     
+    render() {
 
-      
-    render(){
-        console.log(this.props.location);
-        return(
-           <p>Body</p>
+
+        return (
+            <React.Fragment>
+                <NavigationMenu path={this.props.location.pathname} />
+                <p>Body</p>
+            </React.Fragment>
         );
     }
-    
+
 } 

@@ -1,6 +1,7 @@
 const WALLETPROVIDER = require('truffle-hdwallet-provider');
 const Web3 = require('web3');
-
+const path = require('path');
+const fs = require('fs-extra');
 const compiledFactory = require('./build/PropertyTransfer.json');
 
 
@@ -10,8 +11,8 @@ const compiledFactory = require('./build/PropertyTransfer.json');
 // );
 
 const provider = new WALLETPROVIDER(
-  'vocal direct replace bless trophy taxi predict inmate reopen angle ill defy',
-  'http://localhost:7545'
+  'soldier ice act culture uniform stereo census worth creek try grief mass',
+  'http://localhost:8545'
 );
 
 const web3 = new Web3(provider);
@@ -29,6 +30,11 @@ accounts = await web3.eth.getAccounts();
 
   console.log('Contract Address '+inbox.options.address);
   inbox.setProvider(provider);
+
+  fs.outputJsonSync(
+    path.resolve(__dirname,'../src/Util/ADDRESS.json'),
+    inbox.options.address
+  );
 
 }
 

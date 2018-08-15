@@ -15,8 +15,15 @@ fs.ensureDirSync(buildPath);
 
 
 for(let contract in output){
+  
   fs.outputJsonSync(
     path.resolve(buildPath,contract.replace(":","")+'.json'),
     output[contract]
   );
+
+  fs.outputJsonSync(
+    path.resolve(__dirname,'../src/Util/AppInterface.json'),
+    output[contract].interface
+  );
+
 }

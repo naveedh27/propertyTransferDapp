@@ -10,13 +10,23 @@ export default class Home extends Component {
 
     state = {
         name : 'Rob Williams',
-        address : '0x685c565ce59Ffd21038b11B042a8F125532a4710',
-        noOfProp : -1
+        address : '----------------',
+        noOfProp : -1,
+        isLoading : false
     }
 
     async componentWillMount(){
-        const noOfProp = await instance.methods.totalNoOfProperty().call();
-        this.setState({noOfProp})
+        try{
+            this.setState({isLoading:true});
+            const acc = await web3.eth.getAccounts();
+            this.setState({address : acc[0]});
+            const noOfProp = await instance.methods.totalNoOfProperty().call();
+            this.setState({noOfProp});
+        }catch(e){
+
+        }
+        this.setState({isLoading:false});
+       
     }
 
     render() {
@@ -25,8 +35,8 @@ export default class Home extends Component {
             <React.Fragment>
                 <NavigationMenu path={this.props.location.pathname} />
 
-                <Dimmer.Dimmable as={Grid} blurring dimmed={false} style={{ marginTop: '3.7em', marginBottom: '3.7em' }}>
-                
+                <Dimmer.Dimmable as={Grid} blurring dimmed={this.state.isLoading} style={{ marginTop: '3.7em', marginBottom: '3.7em' }}>
+        
                     <Grid.Row>
                         <Grid.Column width={8}>
                             <Header as='h2' textAlign='center'>
@@ -64,7 +74,7 @@ export default class Home extends Component {
                         </Grid.Column>
                     </Grid.Row>
 
-                    <Dimmer inverted active={false}>
+                    <Dimmer inverted active={this.state.isLoading}>
                         <Loader>Fetching Data...</Loader>
                     </Dimmer>
                 </Dimmer.Dimmable>

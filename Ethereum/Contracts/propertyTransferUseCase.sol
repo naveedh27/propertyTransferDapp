@@ -13,10 +13,9 @@ pragma solidity ^0.4.11;
     /// We can extend this easily. But after going through this smart contract, you shall be able to figure out, how the things might work.
 contract PropertyTransfer {
 
-    address public DA; // DA shall be the owner, we shall be initializing this variable's value by the address of the user who's going to deploy it. e.g. let's say DA itself.
-    
-    uint256 public totalNoOfProperty; // total no of properties under a DA at any point of time. they should increase as per the allottment to their respective owner after verification
-    
+    address public DA; 
+    uint256 public totalNoOfProperty; 
+
     // This is the constructor whose code is
     // run only when the contract is created.
     function PropertyTransfer() public{
@@ -54,10 +53,10 @@ contract PropertyTransfer {
     event PropertyTransferred(address indexed _from, address indexed _to, string _propertyName, string _msg);
     
     /// this shall give us the exact property count which any address own at any point of time
-    function getPropertyCountOfAnyAddress(address _ownerAddress) public constant returns (uint256) {
-        uint count=0;
-        for(uint i =0; i<individualCountOfPropertyPerOwner[_ownerAddress];i++){
-            string memory tempPropName = propertiesOwner[_ownerAddress][i];
+    function getPropertyCountOfAnyAddress() public view returns (uint256) {
+        uint count = 0;
+        for(uint i = 0; i<individualCountOfPropertyPerOwner[msg.sender];i++){
+            string memory tempPropName = propertiesOwner[msg.sender][i];
             Property memory tempProp = propetyDetails[tempPropName];
             if(tempProp.isSold != true)
                 count++;
@@ -66,8 +65,7 @@ contract PropertyTransfer {
     }
     
     /// this function shall be called by DA only after verification
-    function allotProperty(address _verifiedOwner, string ownerName,  string _propertyName, string purpose,
-                        string aadhar,string LALO,string addressOfProp,bool isDisputedProp, bool isInheritable) public
+    function allotProperty(address _verifiedOwner, string ownerName,  string _propertyName, string purpose,string aadhar,string LALO,string addressOfProp,bool isDisputedProp, bool isInheritable) public
     onlyOwner
     {   
         propetyDetails[_propertyName].name = _propertyName;

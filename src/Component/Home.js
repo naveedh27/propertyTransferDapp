@@ -20,8 +20,11 @@ export default class Home extends Component {
             this.setState({isLoading:true});
             const acc = await web3.eth.getAccounts();
             this.setState({address : acc[0]});
-            const noOfProp = await instance.methods.totalNoOfProperty().call();
-            this.setState({noOfProp});
+            const noOfProp = await instance.methods.getPropertyCountOfAnyAddress().call({
+                from : this.state.address
+            });
+            const name = await instance.methods.nameOfOwners(this.state.address).call();
+            this.setState({name,noOfProp});
         }catch(e){
 
         }

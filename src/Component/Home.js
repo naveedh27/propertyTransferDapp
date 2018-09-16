@@ -8,28 +8,34 @@ import { Grid, Header, Dimmer, Loader } from 'semantic-ui-react';
 
 export default class Home extends Component {
 
-    state = {
-        name : 'Rob Williams',
-        address : '----------------',
-        noOfProp : -1,
-        isLoading : false
-    }
+    constructor(props){
+        super(props);
 
-    async componentWillMount(){
-        try{
-            this.setState({isLoading:true});
+        this.state = {
+            name: 'Rob Williams',
+            address: '----------------',
+            noOfProp: -1,
+            isLoading: false
+        }
+    }
+   
+
+    async componentWillMount() {
+        try {
+            this.setState({ isLoading: true });
             const acc = await web3.eth.getAccounts();
-            this.setState({address : acc[0]});
+            this.setState({ address: acc[0] });
             const noOfProp = await instance.methods.getPropertyCountOfAnyAddress().call({
-                from : this.state.address
+                from: this.state.address
             });
             const name = await instance.methods.nameOfOwners(this.state.address).call();
-            this.setState({name,noOfProp});
-        }catch(e){
+            this.setState({ name, noOfProp });
+            
+        } catch (e) {
 
         }
-        this.setState({isLoading:false});
-       
+        this.setState({ isLoading: false });
+
     }
 
     render() {
@@ -39,7 +45,7 @@ export default class Home extends Component {
                 <NavigationMenu path={this.props.location.pathname} />
 
                 <Dimmer.Dimmable as={Grid} blurring dimmed={this.state.isLoading} style={{ marginTop: '3.7em', marginBottom: '3.7em' }}>
-        
+
                     <Grid.Row>
                         <Grid.Column width={8}>
                             <Header as='h2' textAlign='center'>
@@ -49,7 +55,7 @@ export default class Home extends Component {
                         <Grid.Column width={8}>
                             <Header as='h2' textAlign='center'>
                                 {this.state.name}
-                        </Header>
+                            </Header>
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row>
@@ -61,7 +67,7 @@ export default class Home extends Component {
                         <Grid.Column width={8}>
                             <Header as='h2' textAlign='center'>
                                 {this.state.address}
-                        </Header>
+                            </Header>
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row>
@@ -73,7 +79,7 @@ export default class Home extends Component {
                         <Grid.Column width={8}>
                             <Header as='h2' textAlign='center'>
                                 {this.state.noOfProp}
-                        </Header>
+                            </Header>
                         </Grid.Column>
                     </Grid.Row>
 

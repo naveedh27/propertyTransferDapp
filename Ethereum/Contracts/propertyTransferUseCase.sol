@@ -13,19 +13,20 @@ pragma solidity ^0.4.11;
     /// We can extend this easily. But after going through this smart contract, you shall be able to figure out, how the things might work.
 contract PropertyTransfer {
 
-    address public DA; 
+    address public admin;
     uint256 public totalNoOfProperty; 
 
     // This is the constructor whose code is
     // run only when the contract is created.
-    function PropertyTransfer() public{
-        DA = msg.sender; // setting the owner of the contract as DA. 
+    function PropertyTransfer(string name) public{
+        admin = msg.sender; // setting the owner of the contract as DA. 
+        nameOfOwners[msg.sender] = name;
     }
     
     
     /// modifier to check the tx is coming from the DA(owner) or not. 
     modifier onlyOwner(){
-        require(msg.sender == DA);
+        require(msg.sender == admin);
         _;
     }
 
@@ -84,7 +85,7 @@ contract PropertyTransfer {
         
         nameOfOwners[_verifiedOwner] = ownerName;
         
-        PropertyAlloted(_verifiedOwner,individualCountOfPropertyPerOwner[_verifiedOwner], _propertyName, "property allotted successfully");
+        PropertyAlloted(_verifiedOwner,individualCountOfPropertyPerOwner[_verifiedOwner], _propertyName, "Property Allotted Successfully");
     }
     
     /// check whether the owner have the said property or not. if yes, return the index

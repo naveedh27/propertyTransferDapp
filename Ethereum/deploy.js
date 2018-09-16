@@ -24,7 +24,7 @@ accounts = await web3.eth.getAccounts();
  console.log('Address from which contract will be deployed : '+accounts[0]);
 
  const inbox = await new web3.eth.Contract(JSON.parse(compiledFactory.interface))
-    .deploy({data:'0x'+compiledFactory.bytecode})
+    .deploy({data:'0x'+compiledFactory.bytecode, arguments:['Admin']})
     .send({from : accounts[0],gas: '3000000' })
     .catch(error => console.log(error));
 

@@ -45,6 +45,12 @@ export default class NavigationMenu extends Component {
                         exact
                     /> 
                 }
+                <Menu.Item
+                        name='Property Details'
+                        as={NavLink}
+                        to="/allprops"
+                        exact
+                    />
             </Menu>
         );
     }

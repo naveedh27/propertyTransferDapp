@@ -50,7 +50,7 @@ export default class PropertyDetails extends Component {
                 .transferProperty(this.state._toAddr,
                     this.state.rawData[this.state.selectedItem].propName).send({
                         from: this.state.address,
-                        gas: 3000000
+                        gas: 100000
                     });
             console.log('Transferred Status'+transferPropertyData);
             alert(transferPropertyData.events.PropertyTransferred.returnValues._msg)

@@ -17,7 +17,7 @@ export default class NavigationMenu extends Component {
         const acc = await web3.eth.getAccounts();
         this.setState({ address: acc[0] });
 
-        const adminAddress = await instance.methods.admin().call({
+        const adminAddress = await instance.methods.DA().call({
             from: this.state.address
         });
 

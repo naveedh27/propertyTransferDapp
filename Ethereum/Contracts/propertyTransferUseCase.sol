@@ -13,20 +13,31 @@ pragma solidity ^0.4.11;
     /// We can extend this easily. But after going through this smart contract, you shall be able to figure out, how the things might work.
 contract PropertyTransfer {
 
-    address public admin;
+    address public DA; 
     uint256 public totalNoOfProperty; 
 
     // This is the constructor whose code is
     // run only when the contract is created.
     function PropertyTransfer(string name) public{
-        admin = msg.sender; // setting the owner of the contract as DA. 
+        DA = msg.sender; // setting the owner of the contract as DA. 
         nameOfOwners[msg.sender] = name;
+        
+        propetyDetails["Sold"].name = "NA";
+        propetyDetails["Sold"].purpose = "NA";
+        propetyDetails["Sold"].aadhar = "NA";
+        propetyDetails["Sold"].LALO = "NA";
+        propetyDetails["Sold"].addressOfProp = "NA";
+        propetyDetails["Sold"].isDisputedProp = false;
+        propetyDetails["Sold"].isInheritable = false;
+        propetyDetails["Sold"].currentOwner = DA;
+        propetyDetails["Sold"].isSold = false;
+        
     }
     
     
     /// modifier to check the tx is coming from the DA(owner) or not. 
     modifier onlyOwner(){
-        require(msg.sender == admin);
+        require(msg.sender == DA);
         _;
     }
 
@@ -54,15 +65,19 @@ contract PropertyTransfer {
     event PropertyTransferred(address indexed _from, address indexed _to, string _propertyName, string _msg);
     
     /// this shall give us the exact property count which any address own at any point of time
-    function getPropertyCountOfAnyAddress() public view returns (uint256) {
+    function getPropertyCountOfAnyAddress() public view returns (uint256, uint256) {
         uint count = 0;
         for(uint i = 0; i<individualCountOfPropertyPerOwner[msg.sender];i++){
             string memory tempPropName = propertiesOwner[msg.sender][i];
-            Property memory tempProp = propetyDetails[tempPropName];
-            if(tempProp.isSold != true)
+            if(!stringsEqual(tempPropName, "Sold")){
                 count++;
+            }   
         }
-        return count;
+        return (individualCountOfPropertyPerOwner[msg.sender],count);
+    }
+
+    function setNameOfOwners(string name) public {
+        nameOfOwners[msg.sender] = name;
     }
     
     /// this function shall be called by DA only after verification
@@ -85,7 +100,7 @@ contract PropertyTransfer {
         
         nameOfOwners[_verifiedOwner] = ownerName;
         
-        PropertyAlloted(_verifiedOwner,individualCountOfPropertyPerOwner[_verifiedOwner], _propertyName, "Property Allotted Successfully");
+        PropertyAlloted(_verifiedOwner,individualCountOfPropertyPerOwner[_verifiedOwner], _propertyName, "property allotted successfully");
     }
     
     /// check whether the owner have the said property or not. if yes, return the index
@@ -114,21 +129,21 @@ contract PropertyTransfer {
     
     /// functionality to check the equality of two strings in Solidity
     function stringsEqual (string a1, string a2)  public constant returns (bool){
-            return keccak256(a1) == keccak256(a2)? true:false;
+            return sha256(a1) == sha256(a2);
     }
     
     /// transfer the property to the new owner
     /// todo : change from to msg.sender
    
-    function transferProperty (address _to, string _propertyName, string _toName) public
+    function transferProperty (address _to, string _propertyName) public
       returns (bool ,  uint )
     {
         uint256 checkOwner = isOwner(msg.sender, _propertyName);
         bool flag = false;
-
+        uint i = 0;
         if(checkOwner != 999999999){
             
-            uint i;
+            
             for(i=0 ; i<individualCountOfPropertyPerOwner[msg.sender]; i++){
                 if( stringsEqual(propetyDetails[propertiesOwner[msg.sender][i]].name, _propertyName)){
                     
@@ -141,15 +156,11 @@ contract PropertyTransfer {
                     
                     flag = true;
                     
-                    if(!stringsEqual(nameOfOwners[_to],"")){
-                        nameOfOwners[_to] = _toName;
-                    }
-                    
                     break;
                 }
             }
             
-            individualCountOfPropertyPerOwner[msg.sender]--;
+            //individualCountOfPropertyPerOwner[msg.sender]--;
             PropertyTransferred(msg.sender , _to, _propertyName, "Owner has been changed." );
              
         }else{

@@ -1,4 +1,6 @@
 
+Property Transfer DApp [![Build Status](https://travis-ci.org/naveedh27/propertyTransferDapp.svg?branch=master)](https://travis-ci.org/naveedh27/propertyTransferDapp)
+
 This a starter project for anyone insterested in developing Ethereum Dapps. You may need some knowledge on React.
 By default the code will run on Rinkeby Nework
 

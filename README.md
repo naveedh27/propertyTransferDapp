@@ -1,21 +1,29 @@
 
-Property Transfer DApp [![Build Status](https://travis-ci.org/naveedh27/propertyTransferDapp.svg?branch=master)](https://travis-ci.org/naveedh27/propertyTransferDapp)
+# Property Transfer DApp 
+
+[![Build Status](https://travis-ci.org/naveedh27/propertyTransferDapp.svg?branch=master)](https://travis-ci.org/naveedh27/propertyTransferDapp)
 
 This a starter project for anyone insterested in developing Ethereum Dapps. You may need some knowledge on React.
 By default the code will run on Rinkeby Nework
 
-1. Clone the Respository 
-  "git clone https://github.com/naveedh27/propertyTransferDapp.git"
+ ## Clone the Respository 
+  
+   "git clone https://github.com/naveedh27/propertyTransferDapp.git"
 
-2. npm install
+ ## npm install
 
-3. To change the blockchain network. Please refer to Ethereum/deploy.js(L.No 8-10)
+ ## To change the blockchain network. 
 
-4. To Compile the contract
-   npm run compile
+    Please refer to Ethereum/deploy.js(L.No 8-10)
 
-5. To Deploy the contract
-   npm run deploy
+ ## To Compile the contract
+   
+    npm run compile
 
-6. To Start the React App
-   npm start
+ ## To Deploy the contract
+   
+    npm run deploy
+
+ ## To Start the React App
+   
+    npm start
